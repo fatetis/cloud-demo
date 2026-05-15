@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: cloud-order
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      # nacos配置中心
+      config:
+        server-addr: 127.0.0.1:8848
+        group: DEFAULT_GROUP
+        file-extension: yaml
+        namespace: public
+        username: ${spring.cloud.nacos.username}
+        password: ${spring.cloud.nacos.password}
+      # nacos服务注册发现
+      discovery:
+        server-addr: 127.0.0.1:8848
+        username: ${spring.cloud.nacos.username}
+        password: ${spring.cloud.nacos.password}
+  #引入nacos配置
+  config:
+    import: nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}

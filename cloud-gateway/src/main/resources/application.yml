@@ -1,0 +1,27 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: cloud-gateway
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      routes:
+        - id: deny-internal
+          uri: no://op
+          order: -1
+          predicates:
+            - Path=/*/internal/**
+          filters:
+            - SetStatus=404
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      httpclient:
+        connect-timeout: 3000
+        response-timeout: 5s

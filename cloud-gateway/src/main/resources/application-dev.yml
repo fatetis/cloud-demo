@@ -1,0 +1,29 @@
+server:
+  port: 8088
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        username: ${spring.cloud.nacos.username}
+        password: ${spring.cloud.nacos.password}
+      username: nacos
+      password: nacos
+    gateway:
+      routes:
+        - id: deny-inner
+          uri: no://op
+          order: -1
+          predicates:
+            - Path=/*/inner/**
+          filters:
+            - SetStatus=404
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      httpclient:
+        connect-timeout: 3000
+        response-timeout: 5s

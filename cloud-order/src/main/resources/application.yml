@@ -5,11 +5,12 @@ spring:
     active: dev
   cloud:
     nacos:
+      server-addr: 127.0.0.1:8848
       username: nacos
       password: nacos
       # nacos配置中心
       config:
-        server-addr: 127.0.0.1:8848
+        server-addr: ${spring.cloud.nacos.server-addr}
         group: DEFAULT_GROUP
         file-extension: yaml
         namespace: public
@@ -17,9 +18,12 @@ spring:
         password: ${spring.cloud.nacos.password}
       # nacos服务注册发现
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: ${spring.cloud.nacos.server-addr}
         username: ${spring.cloud.nacos.username}
         password: ${spring.cloud.nacos.password}
   #引入nacos配置
   config:
-    import: nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+    import:
+      - nacos:common.yaml?refreshEnabled=true
+      - nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}?refreshEnabled=true
+

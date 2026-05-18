@@ -1,5 +1,5 @@
 server:
-  port: 8085
+  port: 8088
 spring:
   application:
     name: cloud-gateway
@@ -18,10 +18,12 @@ spring:
             - Path=/*/internal/**
           filters:
             - SetStatus=404
+      # 自动根据服务名转发（核心功能）
       discovery:
         locator:
-          enabled: true
-          lower-case-service-id: true
+          enabled: true # 开启动态服务发现
+          lower-case-service-id: true # 服务名转小写
+      # 网关请求超时设置
       httpclient:
-        connect-timeout: 3000
-        response-timeout: 5s
+        connect-timeout: 3000 # 连接超时 3秒
+        response-timeout: 5s # 响应超时 5秒

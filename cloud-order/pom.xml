@@ -15,9 +15,6 @@
     <name>cloud-order</name>
     <description>订单服务</description>
 
-    <properties>
-        <spring-cloud-nacos-config.version>2023.0.3.2</spring-cloud-nacos-config.version>
-    </properties>
 
     <dependencies>
         <!-- Spring Boot Web -->
@@ -34,7 +31,6 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-            <version>${spring-cloud-nacos-config.version}</version>
         </dependency>
         <!-- OpenFeign 服务调用 -->
         <dependency>
@@ -50,7 +46,6 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.5.5</version>
         </dependency>
         <!-- MySQL 驱动 -->
         <dependency>

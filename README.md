@@ -3,7 +3,7 @@
 
 ## 软件说明
 基于springBoot3+springCloudAlibaba框架融合各个企业生产环境具备组件：  
-1、✅️服务治理：Nacos + Gateway + Sentinel  
+1、✅️服务治理：Nacos + Gateway  
 2、数据一致性：Seata  
 3、可观测性：SkyWalking + Prometheus + Loki  
 4、安全：OAuth2 / Keycloak  
@@ -11,6 +11,7 @@
 6、分布式能力：Redis、分布式任务  
 7、容器化部署：Docker / K8s
 
+注：打钩✅是当前版本包含的组件，未打钩是还在开发中ing
 ## 端口放行
 
 * 外部访问端口  
@@ -23,5 +24,5 @@
 + springBoot 3
 + springCloudAlibaba 2023
 + MySQL8.0
-+ java 21+
++ java 17+
 + maven3.9.9

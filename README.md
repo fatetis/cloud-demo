@@ -26,3 +26,14 @@
 + MySQL8.0
 + java 17+
 + maven3.9.9
+
+## 项目架构
+```
+cloud-demo/
+├── cloud-common(公共模块)       # 所有服务共享：JWT工具、实体、常量、异常
+├── cloud-gateway(网关模块)      # 全局请求拦截、JWT校验、路由转发
+├── cloud-auth(认证中心)         # 登录、JWT生成、用户认证（唯一授权入口）
+├── cloud-order(业务服务)        # 无权限代码，仅处理业务
+└── cloud-user(业务服务)         # 无权限代码，仅处理业务
+
+```

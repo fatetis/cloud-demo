@@ -34,12 +34,21 @@
         <spring-boot.version>3.2.5</spring-boot.version>
         <spring-cloud.version>2023.0.1</spring-cloud.version>
         <spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
-        <spring-cloud-nacos-config.version>2023.0.3.2</spring-cloud-nacos-config.version>
         <mybatis-plus.version>3.5.5</mybatis-plus.version>
+        <spring-cloud-nacos-config.version>2023.0.3.2</spring-cloud-nacos-config.version>
+        <jjwt.version>0.11.5</jjwt.version>
+        <hutool-all.version>5.8.25</hutool-all.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- 微服务公共模块 -->
+            <dependency>
+                <groupId>com.example</groupId>
+                <artifactId>cloud-common</artifactId>
+                <version>1.0.0</version>
+                <scope>compile</scope>
+            </dependency>
             <!-- Spring Boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -76,6 +85,31 @@
                 <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
                 <version>${spring-cloud-nacos-config.version}</version>
             </dependency>
+            <!-- JJWT JWT工具包（支持SpringBoot3） -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${jjwt.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <version>${jjwt.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <!-- 公用工具 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool-all.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

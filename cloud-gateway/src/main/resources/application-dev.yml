@@ -3,14 +3,19 @@ server:
 spring:
   application:
     name: cloud-gateway
+  main:
+    web-application-type: reactive
   cloud:
     nacos:
+      config:
+        import-check:
+          enabled: false
+      username: nacos
+      password: nacos
       discovery:
         server-addr: 127.0.0.1:8848
         username: ${spring.cloud.nacos.username}
         password: ${spring.cloud.nacos.password}
-      username: nacos
-      password: nacos
     gateway:
       routes:
         - id: deny-inner
@@ -24,6 +29,11 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
+      # 白名单（无需登录）
+      auth:
+        white-list:
+          - /*/auth/login
+          - /*/auth/parseToken
       httpclient:
         connect-timeout: 3000
         response-timeout: 5s

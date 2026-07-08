@@ -6,8 +6,8 @@ package com.spring.common.constant;
 public class JwtConstants {
     // JWT密钥（生产环境放配置中心，建议至少32位）
     public static final String JWT_SECRET = "your-256bit-secret-key-1234567890123456";
-    // Token过期时间：2小时
-    public static final Long JWT_EXPIRE = 7200000L;
+    // Token过期时间：24小时
+    public static final Long JWT_EXPIRE = 86400000L;
     // Token请求头key
     public static final String TOKEN_HEADER = "Authorization";
     // Token前缀

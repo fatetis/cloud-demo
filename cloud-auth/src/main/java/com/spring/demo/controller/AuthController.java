@@ -21,6 +21,7 @@ public class AuthController {
      */
     @PostMapping("/login")
     public String login(@RequestBody LoginDTO loginDTO) {
+        // TODO:后续修改从数据库获取
         // 1. 校验用户名密码（实际从数据库查询）
         if (!"admin".equals(loginDTO.getUsername()) || !"123456".equals(loginDTO.getPassword())) {
             throw new RuntimeException("用户名或密码错误");

@@ -37,3 +37,33 @@ spring:
       httpclient:
         connect-timeout: 3000
         response-timeout: 5s
+    # 负载均衡全局配置
+    loadbalancer:
+      # 1. 负载均衡策略（默认轮询round_robin）
+      policies:
+        round_robin: # 轮询（默认）
+          enabled: true
+        random: # 随机策略
+          enabled: false
+        least_request: # 最少请求数（推荐高并发）
+          enabled: false
+      # 2. 服务实例缓存（Nacos实例缓存，减少频繁拉取）
+      cache:
+        # 缓存存活时间，单位秒
+        ttl: 30
+        # 缓存最大容量
+        capacity: 256
+      # 3. 重试机制（调用失败自动重试其他实例）
+      retry:
+        enabled: true
+        # 同一实例最大重试次数
+        max-retries-on-same-service-instance: 1
+        # 切换其他实例重试次数
+        max-retries-on-next-service-instance: 1
+        # 是否重试GET请求（GET安全可重试，POST不建议开）
+        retry-on-all-operations: false
+      # 4. 健康检测（定期探测实例可用性）
+      health-check:
+        enabled: true
+        # 探测间隔毫秒
+        interval: 5000

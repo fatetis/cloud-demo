@@ -17,6 +17,8 @@ spring:
         username: ${spring.cloud.nacos.username}
         password: ${spring.cloud.nacos.password}
     gateway:
+      auth:
+        white-list: /cloud-auth/auth/login,/cloud-auth/auth/parseToken
       routes:
         - id: deny-inner
           uri: no://op
@@ -29,11 +31,6 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
-      # 白名单（无需登录）
-      auth:
-        white-list:
-          - /*/auth/login
-          - /*/auth/parseToken
       httpclient:
         connect-timeout: 3000
         response-timeout: 5s
@@ -57,9 +54,9 @@ spring:
       retry:
         enabled: true
         # 同一实例最大重试次数
-        max-retries-on-same-service-instance: 1
+        max-retries-on-same-service-instance: 3
         # 切换其他实例重试次数
-        max-retries-on-next-service-instance: 1
+        max-retries-on-next-service-instance: 3
         # 是否重试GET请求（GET安全可重试，POST不建议开）
         retry-on-all-operations: false
       # 4. 健康检测（定期探测实例可用性）

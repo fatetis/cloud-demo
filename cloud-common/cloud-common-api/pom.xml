@@ -6,29 +6,21 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.example</groupId>
-        <artifactId>cloud-demo</artifactId>
+        <groupId>com.example.commons</groupId>
+        <artifactId>cloud-common</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>cloud-user</artifactId>
-    <name>cloud-user</name>
-    <description>用户服务</description>
+    <artifactId>cloud-common-api</artifactId>
+    <name>cloud-common-api</name>
+    <description>对外API层</description>
 
     <dependencies>
 
         <dependency>
             <groupId>com.example.commons</groupId>
-            <artifactId>cloud-common-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-starter-openfeign</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>cloud-common-core</artifactId>
         </dependency>
-
-
     </dependencies>
 
     <build>
@@ -44,13 +36,6 @@
                         </exclude>
                     </excludes>
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

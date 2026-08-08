@@ -15,10 +15,10 @@
 </dependency>
 ```
 ### 数据库配置
-```
-1、创建数据库nacos_config
-2、执行sql文件,初始化数据库，文件路径/environment/mysql-schema.sql
-```
+
+1、创建数据库nacos_config  
+2、执行sql文件,初始化数据库，文件路径/env/mysql-schema.sql
+
 ### 环境参数：
 镜像：nacos/nacos-server:v2.4.3  
 SPRING_DATASOURCE_PLATFORM：mysql持久化保存  
@@ -70,7 +70,7 @@ spring:
 1、登录 Nacos → 配置管理 → 配置列表  
 2、点击 + 新建配置  
 3、填写：  
-3.1）Data ID：user-service-dev.yaml
+3.1）Data ID：user-service-dev.yaml  
 3.2）规则：${服务名}-${环境}.${格式}  
 3.3）Group：DEFAULT_GROUP  
 3.4）配置格式：YAML  

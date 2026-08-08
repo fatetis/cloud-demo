@@ -9,8 +9,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebClientConfig {
     @Bean
     @LoadBalanced
-    public WebClient webClient() {
-        // 直接new Builder，不依赖容器注入Builder Bean
-        return WebClient.builder().build();
+    public WebClient webClient(WebClient.Builder builder) {
+        return builder
+                .defaultHeader("Content-Type", "application/json")
+                .build();
     }
 }

@@ -1,4 +1,4 @@
-package com.spring.common.vo;
+package com.spring.common.api.vo;
 
 
 import lombok.Data;

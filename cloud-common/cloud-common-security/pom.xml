@@ -6,26 +6,33 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.example</groupId>
-        <artifactId>cloud-demo</artifactId>
+        <groupId>com.example.commons</groupId>
+        <artifactId>cloud-common</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>cloud-user</artifactId>
-    <name>cloud-user</name>
-    <description>用户服务</description>
+    <artifactId>cloud-common-security</artifactId>
+    <name>cloud-common-security</name>
+    <description>权限、JWT、token解析、安全过滤器</description>
 
     <dependencies>
-
         <dependency>
             <groupId>com.example.commons</groupId>
-            <artifactId>cloud-common-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-starter-openfeign</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>cloud-common-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!-- JJWT JWT工具包（支持SpringBoot3） -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
         </dependency>
 
 
@@ -44,13 +51,6 @@
                         </exclude>
                     </excludes>
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

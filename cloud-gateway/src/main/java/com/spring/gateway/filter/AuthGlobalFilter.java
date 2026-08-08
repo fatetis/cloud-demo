@@ -1,11 +1,12 @@
 package com.spring.gateway.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.spring.common.constant.JwtConstants;
-import com.spring.common.vo.UserInfoVO;
+import com.spring.common.security.constant.JwtConstants;
+import com.spring.common.api.vo.UserInfoVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.annotation.Order;
@@ -16,34 +17,32 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @Component
-@Order(-100)
+@Order(-99)
 @RequiredArgsConstructor
 public class AuthGlobalFilter implements GlobalFilter {
 
     private final WebClient webClient;
     private final ObjectMapper objectMapper;
 
-    private static final List<String> WHITE_LIST = Arrays.asList(
-            "/cloud-auth/auth/login",
-            "/auth/register"
-    );
+//    读取配置文件
+    @Value("#{'${spring.cloud.gateway.auth.white-list:}'.split(',')}")
+    private final List<String> WHITE_LIST;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getPath().value();
-
         if (WHITE_LIST.contains(path)) {
             return chain.filter(exchange);
         }
@@ -56,8 +55,8 @@ public class AuthGlobalFilter implements GlobalFilter {
         log.info("请求路径:{}, token:{}", path, token);
 
         return webClient.post()
-                .uri("http://127.0.0.1:8084/auth/parseToken",
-                        uriBuilder -> uriBuilder.queryParam("token", token).build())
+                .uri(JwtConstants.JWT_PARSE_TOKEN_LINK)
+                .header("token", token)
                 .retrieve()
                 .bodyToMono(UserInfoVO.class)
                 .flatMap(result -> {

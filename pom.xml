@@ -38,15 +38,51 @@
         <spring-cloud-nacos-config.version>2023.0.3.2</spring-cloud-nacos-config.version>
         <jjwt.version>0.11.5</jjwt.version>
         <hutool-all.version>5.8.25</hutool-all.version>
+        <cloud-commons.version>1.0.0</cloud-commons.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <!-- 微服务公共模块 -->
             <dependency>
-                <groupId>com.example</groupId>
+                <groupId>com.example.commons</groupId>
                 <artifactId>cloud-common</artifactId>
-                <version>1.0.0</version>
+                <version>${cloud-commons.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <!-- 微服务公共模块-授权 -->
+            <dependency>
+                <groupId>com.example.commons</groupId>
+                <artifactId>cloud-common-security</artifactId>
+                <version>${cloud-commons.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <!-- 微服务公共模块-核心 -->
+            <dependency>
+                <groupId>com.example.commons</groupId>
+                <artifactId>cloud-common-core</artifactId>
+                <version>${cloud-commons.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <!-- 微服务公共模块-API -->
+            <dependency>
+                <groupId>com.example.commons</groupId>
+                <artifactId>cloud-common-api</artifactId>
+                <version>${cloud-commons.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <!-- 微服务公共模块-数据库 -->
+            <dependency>
+                <groupId>com.example.commons</groupId>
+                <artifactId>cloud-common-mybatis</artifactId>
+                <version>${cloud-commons.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <!-- 微服务公共模块-WEB -->
+            <dependency>
+                <groupId>com.example.commons</groupId>
+                <artifactId>cloud-common-web</artifactId>
+                <version>${cloud-commons.version}</version>
                 <scope>compile</scope>
             </dependency>
             <!-- Spring Boot -->

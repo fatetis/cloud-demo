@@ -31,9 +31,13 @@
 ```
 cloud-demo/
 ├── cloud-common(公共模块)       # 所有服务共享：JWT工具、实体、常量、异常
+|   ├── cloud-common-api        # 对外API层：Feign接口、DTO、VO、枚举。只放接口和数据模型，尽量轻，零业务逻辑
+|   ├── cloud-common-core       # 核心通用：工具类、统一返回、全局异常、AOP、过滤器、Web配置、Jackson序列化、日期处理
+|   ├── cloud-common-mybatis    # ORM层：Mybatis‑plus配置、分页插件、基础BaseEntity、公共Mapper父类
+|   ├── cloud-common-security   # 权限、JWT、token解析、安全过滤器
+|   ├── cloud-common-web        # WEB层
 ├── cloud-gateway(网关模块)      # 全局请求拦截、JWT校验、路由转发
 ├── cloud-auth(认证中心)         # 登录、JWT生成、用户认证（唯一授权入口）
 ├── cloud-order(业务服务)        # 无权限代码，仅处理业务
 └── cloud-user(业务服务)         # 无权限代码，仅处理业务
-
 ```

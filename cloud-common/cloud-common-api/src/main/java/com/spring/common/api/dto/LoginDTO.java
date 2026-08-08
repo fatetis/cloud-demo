@@ -1,4 +1,4 @@
-package com.spring.common.dto;
+package com.spring.common.api.dto;
 
 import lombok.Data;
 

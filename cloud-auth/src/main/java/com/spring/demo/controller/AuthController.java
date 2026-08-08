@@ -1,8 +1,9 @@
 package com.spring.demo.controller;
 
-import com.spring.common.dto.LoginDTO;
-import com.spring.common.util.JwtUtil;
-import com.spring.common.vo.UserInfoVO;
+import com.spring.common.api.dto.LoginDTO;
+import com.spring.common.security.constant.JwtConstants;
+import com.spring.common.security.utils.JwtUtil;
+import com.spring.common.api.vo.UserInfoVO;
 import io.jsonwebtoken.Claims;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,8 +46,7 @@ public class AuthController {
      * 校验Token并获取用户信息（网关调用）
      */
     @PostMapping("/parseToken")
-    public UserInfoVO parseToken(@RequestParam("token") String token) {
-
+    public UserInfoVO parseToken(@RequestHeader(JwtConstants.TOKEN_HEADER) String token) {
         Claims claims = JwtUtil.getClaims(token);
         UserInfoVO userInfo = new UserInfoVO();
         userInfo.setUserId(claims.get("userId", Long.class));

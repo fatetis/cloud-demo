@@ -5,10 +5,7 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-
-import com.spring.common.constant.JwtConstants;
-import com.spring.common.vo.UserInfoVO;
+import com.spring.common.api.vo.UserInfoVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -28,7 +25,7 @@ public class OrderController {
     public String getOrderInfo(HttpServletRequest request) {
         System.out.println(222);
         // 从网关透传的请求头获取用户信息
-        String userInfoJson = request.getHeader(JwtConstants.USER_INFO_HEADER);
+        String userInfoJson = request.getHeader("user-info");
         try {
             UserInfoVO userInfo = objectMapper.readValue(userInfoJson, UserInfoVO.class);
             return "订单查询成功，当前用户：" + userInfo.getUsername() + "，角色：" + userInfo.getRole();

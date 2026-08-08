@@ -1,6 +1,6 @@
-package com.spring.common.util;
+package com.spring.common.security.utils;
 
-import com.spring.common.constant.JwtConstants;
+import com.spring.common.security.constant.JwtConstants;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;

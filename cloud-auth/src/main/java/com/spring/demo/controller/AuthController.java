@@ -1,6 +1,7 @@
 package com.spring.demo.controller;
 
 import com.spring.common.api.dto.LoginDTO;
+import com.spring.common.core.model.R;
 import com.spring.common.security.constant.JwtConstants;
 import com.spring.common.security.utils.JwtUtil;
 import com.spring.common.api.vo.UserInfoVO;
@@ -21,7 +22,7 @@ public class AuthController {
      * 登录接口（唯一入口）
      */
     @PostMapping("/login")
-    public String login(@RequestBody LoginDTO loginDTO) {
+    public R<String> login(@RequestBody LoginDTO loginDTO) {
         // TODO:后续修改从数据库获取
         // 1. 校验用户名密码（实际从数据库查询）
         if (!"admin".equals(loginDTO.getUsername()) || !"123456".equals(loginDTO.getPassword())) {
@@ -39,19 +40,19 @@ public class AuthController {
         claims.put("userId", userInfo.getUserId());
         claims.put("username", userInfo.getUsername());
         claims.put("role", userInfo.getRole());
-        return JwtUtil.generateToken(claims);
+        return R.ok(JwtUtil.generateToken(claims));
     }
 
     /**
      * 校验Token并获取用户信息（网关调用）
      */
     @PostMapping("/parseToken")
-    public UserInfoVO parseToken(@RequestHeader(JwtConstants.TOKEN_HEADER) String token) {
+    public R<UserInfoVO> parseToken(@RequestHeader(JwtConstants.TOKEN_HEADER) String token) {
         Claims claims = JwtUtil.getClaims(token);
         UserInfoVO userInfo = new UserInfoVO();
         userInfo.setUserId(claims.get("userId", Long.class));
         userInfo.setUsername(claims.get("username", String.class));
         userInfo.setRole(claims.get("role", String.class));
-        return userInfo;
+        return R.ok(userInfo);
     }
 }

@@ -1,6 +1,8 @@
 package com.spring.gateway.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.spring.common.core.constant.ResultCode;
+import com.spring.common.core.model.R;
 import com.spring.common.security.constant.JwtConstants;
 import com.spring.common.api.vo.UserInfoVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -56,18 +58,19 @@ public class AuthGlobalFilter implements GlobalFilter {
 
         return webClient.post()
                 .uri(JwtConstants.JWT_PARSE_TOKEN_LINK)
-                .header("token", token)
+                .header(JwtConstants.TOKEN_HEADER, token)
                 .retrieve()
-                .bodyToMono(UserInfoVO.class)
+                .bodyToMono(R.class)
                 .flatMap(result -> {
                     try {
-                        String userInfoJson = objectMapper.writeValueAsString(result);
+                        String userInfoJson = objectMapper.writeValueAsString(result.getData());
+                        System.out.println("授权返回："+userInfoJson);
                         ServerHttpRequest newReq = request.mutate()
                                 .header(JwtConstants.USER_INFO_HEADER, userInfoJson)
                                 .build();
                         return chain.filter(exchange.mutate().build());
                     } catch (JsonProcessingException e) {
-                        throw new RuntimeException(e);
+                        return Mono.error(new RuntimeException(e));
                     }
                 })
                 .onErrorResume(e -> {
@@ -83,7 +86,7 @@ public class AuthGlobalFilter implements GlobalFilter {
 
         Map<String, Object> map = new HashMap<>();
         map.put("success", false);
-        map.put("code", 401);
+        map.put("code", ResultCode.UNAUTHORIZED.getCode());
         map.put("msg", msg);
 
         try {

@@ -1,7 +1,8 @@
 package com.spring.user.controller;
 
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spring.common.api.vo.UserInfoVO;
 import com.spring.common.core.constant.ResultCode;
 import com.spring.common.core.exception.BaseException;
 import com.spring.common.core.model.R;
@@ -15,9 +16,10 @@ public class UserController {
 
     //    获取登录用户信息例子
     @GetMapping("/user/hello")
-    public R<String> hello(@RequestHeader("user-info") String userInfoVO) {
-        JSONObject jsonObject = JSONUtil.parseObj(userInfoVO);
-        return R.ok("欢迎用户"+jsonObject.get("username") + "登录");
+    public R<String> hello(@RequestHeader("user-info") String userInfoVO) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        UserInfoVO userInfo = objectMapper.readValue(userInfoVO, UserInfoVO.class);
+        return R.ok("欢迎用户"+userInfo.getUsername() + "登录");
     }
 
     @GetMapping("/internal/hello")

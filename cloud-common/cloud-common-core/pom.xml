@@ -16,11 +16,6 @@
     <description>核心通用</description>
     <version>1.0.0</version>
     <dependencies>
-        <!-- 公用工具 -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-        </dependency>
         <!--注解依赖-->
         <dependency>
             <groupId>org.projectlombok</groupId>

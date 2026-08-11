@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.spring.common.core.constant.ResultCode;
 import com.spring.common.core.model.R;
 import com.spring.common.security.constant.JwtConstants;
-import com.spring.common.api.vo.UserInfoVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

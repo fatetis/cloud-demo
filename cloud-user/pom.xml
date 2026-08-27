@@ -20,14 +20,7 @@
         <dependency>
             <groupId>com.example.commons</groupId>
             <artifactId>cloud-common-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-starter-openfeign</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
-
 
     </dependencies>
 

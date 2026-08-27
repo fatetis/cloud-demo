@@ -18,6 +18,11 @@
 
 
     <dependencies>
+        <!-- 公共模块-核心-->
+        <dependency>
+            <groupId>com.example.commons</groupId>
+            <artifactId>cloud-common-core</artifactId>
+        </dependency>
         <!-- MyBatis Plus -->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -29,6 +34,17 @@
             <artifactId>mysql-connector-j</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!-- druid数据源 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- seata spring‑cloud‑alibaba，RM客户端 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

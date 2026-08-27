@@ -36,8 +36,9 @@ NACOS_AUTH_IDENTITY_VALUE： nacos授权value
 
 ### docker部署示例：
 ```
-docker run -d --name nacos --restart=always -p 8848:8848 -p 9848:9848 -p 9849:9849 -e MODE=standalone -e SPRING_DATASOURCE_PLATFORM=mysql -e MYSQL_SERVICE_HOST=192.168.50.103 -e MYSQL_SERVICE_PORT=3306 -e MYSQL_SERVICE_DB_NAME=nacos_config -e MYSQL_SERVICE_USER=root -e MYSQL_SERVICE_PASSWORD=123456 -e NACOS_AUTH_USERNAME=nacos -e NACOS_AUTH_PASSWORD=nacos -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=U2VjQXBwTmFjb3NUb2tlbjEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MA== -e NACOS_AUTH_IDENTITY_KEY=ServerSecurityKey20260430 -e NACOS_AUTH_IDENTITY_VALUE=ServerSecurityValue20260430abc -v 挂载的目录路径:/home/nacos/logs nacos/nacos-server:v2.4.3
+docker run -d --name nacos2.4.3 --restart=always -p 8848:8848 -p 9848:9848 -p 9849:9849 -e MODE=standalone -e SPRING_DATASOURCE_PLATFORM=mysql -e MYSQL_SERVICE_HOST=192.168.40.131 -e MYSQL_SERVICE_PORT=3307 -e MYSQL_SERVICE_DB_NAME=nacos_config -e MYSQL_SERVICE_USER=root -e MYSQL_SERVICE_PASSWORD=123456 -e NACOS_AUTH_USERNAME=nacos -e NACOS_AUTH_PASSWORD=nacos -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=U2VjQXBwTmFjb3NUb2tlbjEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MA== -e NACOS_AUTH_IDENTITY_KEY=ServerSecurityKey20260430 -e NACOS_AUTH_IDENTITY_VALUE=ServerSecurityValue20260430abc -v E:/desktop/docker/mount/nacos2.4.3/logs:/home/nacos/logs -v E:/desktop/docker/mount/nacos2.4.3/conf/application.properties:/home/nacos/conf/application.properties nacos/nacos-server:v2.4.3```
 ```
+
 ### 项目application.yml配置
 ```
 spring:

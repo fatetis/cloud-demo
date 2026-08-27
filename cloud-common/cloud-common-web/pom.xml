@@ -19,14 +19,21 @@
 
     <dependencies>
 
-        <!-- 微服务公共模块-->
+        <!-- 微服务公共模块API-->
         <dependency>
             <groupId>com.example.commons</groupId>
             <artifactId>cloud-common-api</artifactId>
         </dependency>
+        <!-- 微服务公共模块mybatis-->
         <dependency>
             <groupId>com.example.commons</groupId>
             <artifactId>cloud-common-mybatis</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.example.commons</groupId>
+                    <artifactId>cloud-common-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- Spring Boot Web -->
         <dependency>
@@ -43,13 +50,6 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
-        <!-- OpenFeign 服务调用 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-
-
     </dependencies>
 
     <build>

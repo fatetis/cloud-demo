@@ -1,6 +1,6 @@
 package com.spring.demo.controller;
 
-import com.spring.demo.feign.UserFeign;
+import com.spring.common.api.feign.UserFeign;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;

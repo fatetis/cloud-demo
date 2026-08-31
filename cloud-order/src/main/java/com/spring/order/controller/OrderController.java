@@ -1,4 +1,4 @@
-package com.spring.demo.controller;
+package com.spring.order.controller;
 
 import com.spring.common.api.feign.UserFeign;
 import jakarta.annotation.Resource;
@@ -25,7 +25,7 @@ public class OrderController {
     public String getOrderInfo(HttpServletRequest request) {
         System.out.println(222);
         // 从网关透传的请求头获取用户信息
-        String userInfoJson = request.getHeader("user-info");
+        String userInfoJson = request.getHeader("userinfo");
         try {
             UserInfoVO userInfo = objectMapper.readValue(userInfoJson, UserInfoVO.class);
             return "订单查询成功，当前用户：" + userInfo.getUsername() + "，角色：" + userInfo.getRole();

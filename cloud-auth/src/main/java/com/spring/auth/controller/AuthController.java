@@ -1,4 +1,4 @@
-package com.spring.demo.controller;
+package com.spring.auth.controller;
 
 import com.spring.common.api.dto.LoginDTO;
 import com.spring.common.core.model.R;

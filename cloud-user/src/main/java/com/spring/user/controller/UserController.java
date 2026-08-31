@@ -16,7 +16,7 @@ public class UserController {
 
     //    获取登录用户信息例子
     @GetMapping("/user/hello")
-    public R<String> hello(@RequestHeader("user-info") String userInfoVO) throws JsonProcessingException {
+    public R<String> hello(@RequestHeader("userinfo") String userInfoVO) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         UserInfoVO userInfo = objectMapper.readValue(userInfoVO, UserInfoVO.class);
         return R.ok("欢迎用户"+userInfo.getUsername() + "登录");

@@ -10,7 +10,7 @@
         <artifactId>cloud-demo</artifactId>
         <version>1.0.0</version>
     </parent>
-
+    <groupId>com.example.user</groupId>
     <artifactId>cloud-user</artifactId>
     <name>cloud-user</name>
     <description>用户服务</description>

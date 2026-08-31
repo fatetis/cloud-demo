@@ -3,19 +3,30 @@ server:
 spring:
   application:
     name: cloud-gateway
-  main:
-    web-application-type: reactive
   cloud:
     nacos:
-      config:
-        import-check:
-          enabled: false
+      server-addr: 192.168.40.131:8848
       username: nacos
       password: nacos
+      config:
+        group: DEFAULT_GROUP
+        namespace: public
+        file-extension: yaml
+        import-check:
+          enabled: false
       discovery:
-        server-addr: 127.0.0.1:8848
-        username: ${spring.cloud.nacos.username}
-        password: ${spring.cloud.nacos.password}
+        group: DEFAULT_GROUP
+        namespace: public
+        username: nacos
+        password: nacos
+        locator:
+          enabled: true
+#        # 开启实例缓存保护，grpc收到空推送不会直接清空内存实例
+#        protect-ips: true
+#        # 缓存过期时间
+#        cache-expire-time: 15000
+#        # 兜底http轮询间隔，定时拉取真实实例列表修复缓存
+#        watch-delay: 5000
     gateway:
       auth:
         white-list: /cloud-auth/auth/login,/cloud-auth/auth/parseToken
@@ -27,10 +38,18 @@ spring:
             - Path=/*/inner/**
           filters:
             - SetStatus=404
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
+        - id: cloud-order
+          uri: lb://cloud-order/
+          predicates:
+            - Path=/order/**
+        - id: cloud-auth
+          uri: lb://cloud-auth/
+          predicates:
+            - Path=/auth/**
+        - id: cloud-user
+          uri: lb://cloud-user/
+          predicates:
+            - Path=/user/**
       httpclient:
         connect-timeout: 3000
         response-timeout: 5s
@@ -46,6 +65,7 @@ spring:
           enabled: false
       # 2. 服务实例缓存（Nacos实例缓存，减少频繁拉取）
       cache:
+        enabled: true
         # 缓存存活时间，单位秒
         ttl: 30
         # 缓存最大容量
@@ -64,3 +84,10 @@ spring:
         enabled: true
         # 探测间隔毫秒
         interval: 5000
+      enabled: true
+## 日志配置，调试LoadBalancer懒加载、nacos问题
+#logging:
+#  level:
+#    org.springframework.cloud.loadbalancer: DEBUG
+#    com.alibaba.cloud.nacos: INFO
+#    org.springframework.cloud.gateway: INFO

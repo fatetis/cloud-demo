@@ -55,6 +55,7 @@ public class AuthGlobalFilter implements GlobalFilter {
         }
         log.info("请求路径:{}, token:{}", path, token);
 
+
         return webClient.post()
                 .uri(JwtConstants.JWT_PARSE_TOKEN_LINK)
                 .header(JwtConstants.TOKEN_HEADER, token)
@@ -63,11 +64,12 @@ public class AuthGlobalFilter implements GlobalFilter {
                 .flatMap(result -> {
                     try {
                         String userInfoJson = objectMapper.writeValueAsString(result.getData());
-                        System.out.println("授权返回："+userInfoJson);
+                        log.info("授权返回："+userInfoJson);
                         ServerHttpRequest newReq = request.mutate()
                                 .header(JwtConstants.USER_INFO_HEADER, userInfoJson)
                                 .build();
-                        return chain.filter(exchange.mutate().build());
+                        log.info("开始跳转到具体服务...");
+                        return chain.filter(exchange.mutate().request(newReq).build());
                     } catch (JsonProcessingException e) {
                         return Mono.error(new RuntimeException(e));
                     }

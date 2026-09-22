@@ -1,0 +1,65 @@
+store:
+  mode: db
+  db:
+    datasource: druid
+    dbType: mysql
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.40.131:3307/seata_server?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai&connectTimeout=3000&socketTimeout=60000
+    user: root
+    password: "123456"
+    minConn: 5
+    maxConn: 20
+    maxWait: 30000
+    global-table: global_table
+    branch-table: branch_table
+    lock-table: lock_table
+    # 关键！！分布式锁表配置，报错就是缺这一行
+    distributedLockTable: distributed_lock
+    query-limit: 100
+    # druid连接池基础参数
+    druid:
+      initialSize: 5
+      maxActive: 20
+      minIdle: 5
+      maxWait: 30000
+      # 空闲连接检测核心【修复死连接报错关键】
+      testWhileIdle: true
+      testOnBorrow: true
+      testOnReturn: false
+      validationQuery: SELECT 1
+      # 空闲检测调度周期60s，必须小于mysql wait_timeout
+      timeBetweenEvictionRunsMillis: 30000
+      # 空闲连接最大存活3分钟，超过销毁
+      minEvictableIdleTimeMillis: 300000
+      numTestsPerEvictionRun: 3
+      # 关闭druid监控（seata-server一般不需要）
+      filters: stat,wall
+      webStatFilter:
+        enabled: false
+      statViewServlet:
+        enabled: false
+
+server:
+  undo:
+    # undo保留天数 默认7天,log_status=1（附录3）和未正常清理的undo
+    logSaveDays: 7
+    # undo清理线程间隔时间 默认86400000，单位毫秒
+    logDeletePeriod: 86400000
+  # 二阶段提交重试超时时长 单位ms,s,m,h,d,对应毫秒,秒,分,小时,天,默认毫秒。默认值-1表示无限重试
+  # 公式: timeout>=now-globalTransactionBeginTime,true表示超时则不再重试
+  # 注: 达到超时时间后将不会做任何重试,有数据不一致风险,除非业务自行可校准数据,否者慎用
+  maxCommitRetryTimeout: 3600000
+  # 二阶段回滚重试超时时长
+  maxRollbackRetryTimeout: 3600000
+  recovery:
+    # 二阶段提交未完成状态全局事务重试提交线程间隔时间 默认1000，单位毫秒
+    committingRetryPeriod: 3000
+    # 二阶段异步提交状态重试提交线程间隔时间 默认1000，单位毫秒
+    asynCommittingRetryPeriod: 3000
+    # 二阶段回滚状态重试回滚线程间隔时间  默认1000，单位毫秒
+    rollbackingRetryPeriod: 3000
+    # 超时状态检测重试线程间隔时间 默认1000，单位毫秒，检测出超时将全局事务置入回滚会话管理器
+    timeoutRetryPeriod: 3000
+    # 定时清理过期事务，单位毫秒
+    retry‑deadlock: true
+    undo‑log‑delete‑period: 86400000

@@ -14,12 +14,11 @@
 1、✅️服务治理：Nacos-server:2.4.3 + Gateway  
 2、✅️数据一致性：Seata-server:2.6.0  
 3、可观测性：SkyWalking + Prometheus + Loki  
-4、安全：OAuth2 / Keycloak  
-5、异步：消息队列  
-6、分布式能力：Redis、分布式任务  
-7、容器化部署：Docker / K8s  
-8、✅OpenFeign：服务远程调用  
-9、✅️数据库连接池druid  
+4、异步：消息队列  
+5、分布式能力：Redis、分布式任务  
+6、✅容器化部署：Docker / K8s  
+7、✅OpenFeign：服务远程调用  
+8、✅️数据库连接池druid  
 注：打钩✅是当前版本包含的组件，未打钩是还在开发中ing
 
 ## 端口放行
@@ -45,5 +44,16 @@ cloud-demo/
 └── cloud-user(业务服务)         # 示例业务微服务模块（无业务逻辑，仅演示CRUD基础模板）
 ```
 
+## 镜像构建
+在根目录运行以下命令  
+--build-arg SERVICE_MODULE：构建微服务名  
+-t 镜像名及标签
+```angular2html
+docker build --build-arg SERVICE_MODULE=cloud-auth -t cloud-demo/auth:v1.0 .
+```
+## 容器运行
+```angular2html
+docker run -d --name cloud-auth -p 8084:8084 cloud-demo/auth:v1.0
+```
 ## 未完待续，努力搭建中
 若觉得有用的话，求关注求收藏，您的关注和收藏是我持续搭建开发的动力

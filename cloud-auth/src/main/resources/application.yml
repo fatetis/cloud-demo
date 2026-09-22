@@ -10,7 +10,6 @@ spring:
       password: nacos
       # nacos配置中心
       config:
-        server-addr: ${spring.cloud.nacos.server-addr}
         group: DEFAULT_GROUP
         file-extension: yaml
         namespace: public
@@ -18,7 +17,6 @@ spring:
         password: ${spring.cloud.nacos.password}
       # nacos注册中心
       discovery:
-        server-addr: ${spring.cloud.nacos.server-addr}
         username: ${spring.cloud.nacos.username}
         password: ${spring.cloud.nacos.password}
   #引入nacos配置

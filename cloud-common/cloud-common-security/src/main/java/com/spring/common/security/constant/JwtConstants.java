@@ -15,6 +15,6 @@ public class JwtConstants {
     // 用户信息请求头（网关透传给业务服务）
     public static final String USER_INFO_HEADER = "userinfo";
     // 解析JWT-Token地址
-    public static final String JWT_PARSE_TOKEN_LINK = "http://127.0.0.1:8088/cloud-auth/auth/parseToken";
+    public static final String JWT_PARSE_TOKEN_LINK = "http://192.168.40.131:8088/cloud-auth/auth/parseToken";
 
 }

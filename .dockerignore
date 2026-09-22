@@ -1,0 +1,7 @@
+.git
+.idea
+.vscode
+logs
+*.md
+# 忽略所有target，打包时COPY . .不会带上本地编译产物
+*/target

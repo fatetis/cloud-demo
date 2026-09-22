@@ -7,23 +7,89 @@ spring:
     active: dev
   cloud:
     nacos:
+      server-addr: 192.168.40.131:8848
+      username: nacos
+      password: nacos
+      config:
+        group: DEFAULT_GROUP
+        namespace: public
+        file-extension: yaml
+        import-check:
+          enabled: false
       discovery:
-        server-addr: localhost:8848
+        group: DEFAULT_GROUP
+        namespace: public
+        username: nacos
+        password: nacos
+        locator:
+          enabled: true
+    #        # 开启实例缓存保护，grpc收到空推送不会直接清空内存实例
+    #        protect-ips: true
+    #        # 缓存过期时间
+    #        cache-expire-time: 15000
+    #        # 兜底http轮询间隔，定时拉取真实实例列表修复缓存
+    #        watch-delay: 5000
     gateway:
+      auth:
+        white-list: /cloud-auth/auth/login,/cloud-auth/auth/parseToken
       routes:
-        - id: deny-internal
+        - id: deny-inner
           uri: no://op
           order: -1
           predicates:
-            - Path=/*/internal/**
+            - Path=/*/inner/**
           filters:
             - SetStatus=404
-      # 自动根据服务名转发（核心功能）
-      discovery:
-        locator:
-          enabled: true # 开启动态服务发现
-          lower-case-service-id: true # 服务名转小写
-      # 网关请求超时设置
+        - id: cloud-order
+          uri: lb://cloud-order/
+          predicates:
+            - Path=/order/**
+        - id: cloud-auth
+          uri: lb://cloud-auth/
+          predicates:
+            - Path=/auth/**
+        - id: cloud-user
+          uri: lb://cloud-user/
+          predicates:
+            - Path=/user/**
       httpclient:
-        connect-timeout: 3000 # 连接超时 3秒
-        response-timeout: 5s # 响应超时 5秒
+        connect-timeout: 3000
+        response-timeout: 5s
+    # 负载均衡全局配置
+    loadbalancer:
+      # 1. 负载均衡策略（默认轮询round_robin）
+      policies:
+        round_robin: # 轮询（默认）
+          enabled: true
+        random: # 随机策略
+          enabled: false
+        least_request: # 最少请求数（推荐高并发）
+          enabled: false
+      # 2. 服务实例缓存（Nacos实例缓存，减少频繁拉取）
+      cache:
+        enabled: true
+        # 缓存存活时间，单位秒
+        ttl: 30
+        # 缓存最大容量
+        capacity: 256
+      # 3. 重试机制（调用失败自动重试其他实例）
+      retry:
+        enabled: true
+        # 同一实例最大重试次数
+        max-retries-on-same-service-instance: 3
+        # 切换其他实例重试次数
+        max-retries-on-next-service-instance: 3
+        # 是否重试GET请求（GET安全可重试，POST不建议开）
+        retry-on-all-operations: false
+      # 4. 健康检测（定期探测实例可用性）
+      health-check:
+        enabled: true
+        # 探测间隔毫秒
+        interval: 5000
+      enabled: true
+## 日志配置，调试LoadBalancer懒加载、nacos问题
+#logging:
+#  level:
+#    org.springframework.cloud.loadbalancer: DEBUG
+#    com.alibaba.cloud.nacos: INFO
+#    org.springframework.cloud.gateway: INFO

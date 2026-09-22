@@ -80,79 +80,7 @@ INSERT INTO `distributed_lock` (lock_key, lock_value, expire) VALUES ('RetryRoll
 INSERT INTO `distributed_lock` (lock_key, lock_value, expire) VALUES ('TxTimeoutCheck', ' ', 0);
 ```
 ## 二、新建seata-server的application.yml配置文件
-
-```angular2html
-
-#
-# Licensed to the Apache Software Foundation (ASF) under one or more
-# contributor license agreements.  See the NOTICE file distributed with
-# this work for additional information regarding copyright ownership.
-# The ASF licenses this file to You under the Apache License, Version 2.0
-# (the "License"); you may not use this file except in compliance with
-# the License.  You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-server:
-  port: 8091
-spring:
-  application:
-    name: seata-server
-  main:
-    web-application-type: none
-logging:
-  config: classpath:logback-spring.xml
-  file:
-    path: ${log.home:${user.home}/logs/seata}
-  extend:
-    logstash-appender:
-      # off by default
-      enabled: false
-      destination: 127.0.0.1:4560
-    kafka-appender:
-      # off by default
-      enabled: false
-      bootstrap-servers: 127.0.0.1:9092
-      topic: logback_to_logstash
-      producer:
-        acks: 0
-        linger-ms: 1000
-        max-block-ms: 0
-    metric-appender:
-      # off by default
-      enabled: false
-
-seata:
-  config:
-    # support: nacos, consul, apollo, zk, etcd3
-    type: nacos
-    nacos:
-      server-addr: 192.168.40.131:8848
-      namespace: public
-      group: SEATA_GROUP
-      username: nacos
-      password: nacos
-      data-id: seataServer.yaml
-  registry:
-    # support: nacos, eureka, redis, zk, consul, etcd3, sofa
-    type: nacos
-    nacos:
-      application: seata-server
-      server-addr: 192.168.40.131:8848
-      group: SEATA_GROUP
-      namespace: seata-server
-      # tc集群名称
-      cluster: default
-      username: nacos
-      password: nacos
-
-```
+路径配置：./seata-server/application.yml
 
 ## 三、准备nacos配置中心配置
 
@@ -161,7 +89,7 @@ Group:SEATA_GROUP
 
 参考../seata-server.yaml文件配置
 
-## 四、配置MYSQL参数
+## 四、配置MYSQL
 > my.cnf 永久配置
 ```
 
@@ -178,9 +106,13 @@ max_allowed_packet = 64M
 max_connections = 500
 ```
 
-## 四、docker拉取镜像并创建容器
-> 镜像：apache/seata-server:2.6.0
+## 五、docker拉取镜像并创建容器
+> 镜像：apache/seata-server:2.1.0
+## 六、温馨提示
+连接mysql8.0版本以上需挂载mysql-connector-java-8.0.30.jar驱动到镜像文件夹（/seata-server/libs/）
+
+## 七、docker部署命令
 ```angular2html
-docker run -d --name seata-server -p 7091:7091 -p 8091:8091 -e SEATA_IP=宿主机IP -e SEATA_PORT=8091 -v /替换成第二步创建application.yml的路径/application.yml:/seata-server/resources/application.yml -v /替换成日志挂载路径/logs:/root/logs/seata --restart always apache/seata-server:2.6.0
+docker run -d --name seata-server -p 7091:7091 -p 8091:8091 -e SEATA_IP=宿主机IP -e SEATA_PORT=8091 -v /替换成第二步创建application.yml的路径/application.yml:/seata-server/resources/application.yml -v /替换成日志挂载路径/logs:/root/logs/seata --restart always apache/seata-server:2.1.0
 ```
 
